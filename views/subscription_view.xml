@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_subscription_inherit_form" model="ir.ui.view">
+            <field name="name">view.sale.subscription.inherit.form</field>
+            <field name="model">sale.subscription</field>
+            <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
+            <field name="arch" type="xml">
+          
+                <xpath  expr="//field[@name='recurring_invoice_line_ids']/tree[1]/field[@name='product_id']"  position="before">
+                    <field name="type_s"/>
+                    <field name="db"/>
+                </xpath>
+            </field>
+    </record>
+    
+    <record id="view_subscription_view_form" model="ir.ui.view">
+        <field name="name">subscription.ya</field>
+        <field name="model">conectionsubscription</field>
+        <field name="arch" type="xml">  
+            <form string="Configuracion">
+                <sheet>
+                    <button name="get_conexion" type="object" string="Actualizar archivos" class="oe_highlight"/>
+                    <group colspan="4" col="4"> 
+                        <field name="name"/>
+                        <field name="host"/>
+                        <field name="port"/>
+                        <field name="user"/>
+                        <field name="password" password="True"/> 
+                    </group>
+                </sheet>
+            </form>  
+        </field>
+    </record>
+
+    <record id="view_subscription_view_tree" model="ir.ui.view">
+        <field name="name">subscription.ya.tree</field>
+        <field name="model">conectionsubscription</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">              
+            <tree string="Configuración">
+                <field name="name"/>
+                <field name="host"/>
+                <field name="port"/>
+                <field name="user"/>
+            </tree> 
+        </field>
+    </record>
+
+    <record id="jr_subscriptions.act_location" model="ir.actions.act_window">
+        <field name="name">Configuración</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">conectionsubscription</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_open_op_subscription_view_tree">
+        <field name="act_window_id" ref="jr_subscriptions.act_location"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_subscription_view_tree"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_op_subscription_view_form">
+        <field name="act_window_id" ref="jr_subscriptions.act_location"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_subscription_view_form"/>
+    </record>
+    
+
+    <menuitem id="jr_subscriptions_menu" 
+                    name="Configuración conexion"
+                    
+                    action="jr_subscriptions.act_location" sequence="120" parent="sale_subscription.menu_sale_subscription_config"/>
+</odoo>
