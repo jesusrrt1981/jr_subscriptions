@@ -18,8 +18,12 @@
         <field name="model">conectionsubscription</field>
         <field name="arch" type="xml">  
             <form string="Configuracion">
-                <sheet>
+                <header>
+                    <button name="get_database_name" type="object" string="Actualizar base de datos" class="oe_highlight"/>
                     <button name="get_conexion" type="object" string="Actualizar archivos" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    
                     <group colspan="4" col="4"> 
                         <field name="name"/>
                         <field name="host"/>
@@ -45,6 +49,36 @@
             </tree> 
         </field>
     </record>
+    <record id="view_subscription_view_form1" model="ir.ui.view">
+        <field name="name">subscription.ya1</field>
+        <field name="model">base.datos.query</field>
+        <field name="arch" type="xml">  
+            <form string="Configuracion">
+                <sheet>
+                    <group colspan="4" col="4"> 
+                        <field name="name"/>
+                        <field name="owner"/>
+                        <field name="tiene_subs"/>
+             
+                    </group>
+                </sheet>
+            </form>  
+        </field>
+    </record>
+
+    <record id="view_subscription_view_tree1" model="ir.ui.view">
+        <field name="name">subscription.ya.tree1</field>
+        <field name="model">base.datos.query</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">              
+            <tree string="Configuración">
+                <field name="name"/>
+                <field name="owner"/>
+                <field name="tiene_subs"/>
+            
+            </tree> 
+        </field>
+    </record>
 
     <record id="jr_subscriptions.act_location" model="ir.actions.act_window">
         <field name="name">Configuración</field>
@@ -63,10 +97,37 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_subscription_view_form"/>
     </record>
+    <record id="jr_subscriptions.act_location1" model="ir.actions.act_window">
+        <field name="name">Base de datos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">base.datos.query</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_open_op_subscription_view_tree1">
+        <field name="act_window_id" ref="jr_subscriptions.act_location1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_subscription_view_tree1"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_op_subscription_view_form1">
+        <field name="act_window_id" ref="jr_subscriptions.act_location1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_subscription_view_form1"/>
+    </record>
     
 
     <menuitem id="jr_subscriptions_menu" 
                     name="Configuración conexion"
                     
-                    action="jr_subscriptions.act_location" sequence="120" parent="sale_subscription.menu_sale_subscription_config"/>
+                     sequence="120" parent="sale_subscription.menu_sale_subscription_config">
+        <menuitem id="jr_subscriptions_menu1" 
+                    name="Conexion"
+                    
+                    action="jr_subscriptions.act_location" sequence="120"/>
+        <menuitem id="jr_subscriptions_menu2" 
+                    name="Base de datos"
+                    
+                    action="jr_subscriptions.act_location1" sequence="120"/>
+    </menuitem>
+
 </odoo>

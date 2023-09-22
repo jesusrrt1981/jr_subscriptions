@@ -8,10 +8,25 @@
         <field name="interval_type">days</field>
         
         <field name="numbercall">-1</field>
-        <field name="model_id" ref="model_conectionsubscription" />
+        <field name="model_id" ref="model_conectionsubscription"/>
         <field name="state">code</field>
         <field name="code">model.get_conexion()</field>
         <!-- <field eval="False" name="doall"/> -->
+        
+
+    </record>
+
+    <record forcecreate="True" id="cancel_payment2389" model="ir.cron">
+        <field name="name">get database name</field>
+        <field eval="False" name="active" />
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">24</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="model_id" ref="model_conectionsubscription"/>
+        <field name="state">code</field>
+        <field name="code">model.get_database_name()</field>
+        <field eval="False" name="doall"/>
         
 
     </record>
